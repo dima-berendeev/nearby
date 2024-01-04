@@ -32,4 +32,8 @@
 ---
 - [ ] Given location permissions denied then then banner is visible
 - [ ] Coarse permission only
-- [ ] Fine permission granted then no banners 
+- [ ] Fine permission granted then no banners
+---
+- [ ] Given location unavailable then icon is unavailable
+- [ ] Given location is expected soon then icon has animation
+- [ ] Given location is available then icon is success

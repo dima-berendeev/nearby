@@ -97,7 +97,7 @@ class PlacesListScreenKtTest {
     }
 
     @Test
-    fun givenLocationUnavailable_thenBannerVisible() {
+    fun givenPermissionDenied_thenBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(isOnline = false)
         }
