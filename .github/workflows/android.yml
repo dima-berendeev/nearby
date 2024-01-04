@@ -37,7 +37,8 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-       path: 'app/reports/'
+        name: lint-report
+        path: 'app/reports/lint'
     - name: Unit tests
       run: ./gradlew test
     - name: Setup Android SDK
@@ -49,4 +50,5 @@ jobs:
     - name: Upload debug apk
       uses: actions/upload-artifact@v4
       with:
+        name: debug-apk
         path: 'app/build/outputs/apk/debug/app-debug.apk'
