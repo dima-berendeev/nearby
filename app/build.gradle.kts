@@ -6,7 +6,6 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-apply(from = "local.gradle")
 android {
     namespace = "org.berendeev.nearby"
     compileSdk = 34
@@ -17,10 +16,10 @@ android {
         }
         managedDevices {
             localDevices {
-                create("pixel2api30") {
-                    device = "Pixel 2"
-                    apiLevel = 30
-                    systemImageSource = "google-atd"
+                create("Pixel_C") {
+                    device = "Pixel 6"
+                    apiLevel = 31
+                    systemImageSource = "aosp-atd"
                 }
             }
         }
@@ -37,6 +36,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val apiKey = project.properties["FOURSQUARE_API_KEY"]
+            ?: System.getenv("FOURSQUARE_API_KEY")
+        buildConfigField("String", "API_KEY", "\"${apiKey}\"")
     }
     buildTypes {
         debug {
@@ -48,8 +50,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(11)
     }
 
     buildFeatures {
@@ -66,9 +69,9 @@ android {
             merges += "META-INF/LICENSE-notice.md"
         }
     }
-    lint{
+    lint {
         htmlReport = true
-        htmlOutput = file("${projectDir}/reports/lint-report.html")
+        htmlOutput = file("${projectDir}/reports/lint/index.html")
     }
 }
 configurations {
