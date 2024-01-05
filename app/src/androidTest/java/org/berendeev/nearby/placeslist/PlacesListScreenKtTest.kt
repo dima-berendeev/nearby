@@ -97,7 +97,7 @@ class PlacesListScreenKtTest {
     }
 
     @Test
-    fun givenPermissionDenied_thenBannerVisible() {
+    fun givenOfflineMode_thenOfflineBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(isOnline = false)
         }
@@ -106,7 +106,7 @@ class PlacesListScreenKtTest {
     }
 
     @Test
-    fun givenLocationAvailable_thenNoOfflineBanner() {
+    fun givenOnlineMode_thenNoOfflineBanner() {
         composeTestRule.setContent {
             TestPlacesListScreen(isOnline = true)
         }
@@ -116,14 +116,14 @@ class PlacesListScreenKtTest {
     }
 
     @Test
-    fun givenOnlineAndPermissionDenied_thenPermissionBannerVisible() {
+    fun givenOfflineAndPermissionDenied_thenOfflineBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(
-                isOnline = true,
+                isOnline = false,
                 permissionsState = DeniedPermissionsState
             )
         }
-        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.LocationPermissionDenied.asString)
+        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.Offline.asString)
             .assertExists()
     }
 

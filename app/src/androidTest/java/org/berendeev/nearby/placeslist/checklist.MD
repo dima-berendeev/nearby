@@ -26,9 +26,9 @@
 - [X] Given Success and list is empty then not found blank is visible
 - [X] Given Failure then blank is visible
 ---
-- [ ] Given there is no internet then Offline banner is visible
-- [ ] Given there is internet then Offline banner is invisible
-- [ ] Offline banner has priority over location permission banners
+- [x] Given there is no internet then Offline banner is visible
+- [x] Given there is internet then Offline banner is invisible
+- [X] Offline banner has priority over location permission banners
 ---
 - [ ] Given location permissions denied then then banner is visible
 - [ ] Coarse permission only
