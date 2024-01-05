@@ -32,6 +32,6 @@
 - [X] Given online and Coarse permission only then no fine location permission visible
 - [x] Given online and location permission granted then no banner 
 ---
-- [ ] Given location is available then icon is available
-- [ ] Given location unavailable then icon is unavailable
-- [ ] Given location is expected soon then icon has animation
+- [X] Given location is available then icon is available
+- [X] Given location unavailable then icon is unavailable
+- [X] Given location is expected soon then icon has animation
