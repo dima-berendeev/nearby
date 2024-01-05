@@ -30,7 +30,7 @@
 - [x] Given there is internet then Offline banner is invisible
 - [X] Offline banner has priority over location permission banners
 ---
-- [ ] Given location permissions denied then then banner is visible
+- [X] Given online location permissions denied then then banner is visible
 - [ ] Coarse permission only
 - [ ] Fine permission granted then no banners
 ---

@@ -39,6 +39,7 @@ class PlacesListScreenKtTest {
         }
     }
 
+    // Data related
     @Test
     fun givenStateLoading_thenProgressIsVisible() {
         composeTestRule.setContent {
@@ -96,12 +97,13 @@ class PlacesListScreenKtTest {
             .assertIsDisplayed()
     }
 
+    // Online/offline
     @Test
     fun givenOfflineMode_thenOfflineBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(isOnline = false)
         }
-        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.Offline.asString)
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
             .assertExists()
     }
 
@@ -111,24 +113,37 @@ class PlacesListScreenKtTest {
             TestPlacesListScreen(isOnline = true)
         }
         composeTestRule.onNodeWithTag("PlacesListScreen")
-        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.Offline.asString)
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
             .assertDoesNotExist()
     }
 
     @Test
-    fun givenOfflineAndPermissionDenied_thenOfflineBannerVisible() {
+    fun givenOfflineAndLocationPermissionDenied_thenOfflineBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(
                 isOnline = false,
-                permissionsState = DeniedPermissionsState
+                permissionsState = LocationPermissionDeniedPermissionsState
             )
         }
-        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.Offline.asString)
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
+            .assertExists()
+    }
+
+    // Location permission
+    @Test
+    fun givenOnlineAndLocationPermissionDenied_thenLocationPermissionDeniedBannerVisible() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(
+                isOnline = true,
+                permissionsState = LocationPermissionDeniedPermissionsState
+            )
+        }
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.LocationPermissionDenied.testTag)
             .assertExists()
     }
 
     companion object {
-        val DeniedPermissionsState = object : LocationPermissionsState.Denied() {
+        val LocationPermissionDeniedPermissionsState = object : LocationPermissionsState.Denied() {
             override fun requestPermissions() {
             }
         }
