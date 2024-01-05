@@ -51,10 +51,10 @@ jobs:
 #   Android test
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-    - name: Android Pixel-C api31 Setup
-      run: ./gradlew :app:Pixel_CSetup --stacktrace
+    - name: Android Pixel 2 api30 Setup
+      run: ./gradlew :app:pixel2api30Setup --stacktrace
     - name: Android tests
-      run: ./gradlew :app:Pixel_CDebugAndroidTest --stacktrace
+      run: ./gradlew :app:pixel2api30DebugAndroidTest --stacktrace
     - name: Android Test Report
       uses: dorny/test-reporter@v1
       if: always()

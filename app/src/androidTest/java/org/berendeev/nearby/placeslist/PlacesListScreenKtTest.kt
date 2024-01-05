@@ -122,7 +122,7 @@ class PlacesListScreenKtTest {
         composeTestRule.setContent {
             TestPlacesListScreen(
                 isOnline = false,
-                permissionsState = LocationPermissionDeniedPermissionsState
+                permissionsState = DeniedLocationPermissionsState
             )
         }
         composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
@@ -135,15 +135,32 @@ class PlacesListScreenKtTest {
         composeTestRule.setContent {
             TestPlacesListScreen(
                 isOnline = true,
-                permissionsState = LocationPermissionDeniedPermissionsState
+                permissionsState = DeniedLocationPermissionsState
             )
         }
         composeTestRule.onNodeWithTag(PlacesListScreen.Banner.LocationPermissionDenied.testTag)
             .assertExists()
     }
 
+    @Test
+    fun givenOnlineAndCoarseLocationPermissionAllowed_thenFineLocationPermissionDeniedBannerVisible() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(
+                isOnline = true,
+                permissionsState = ApproximateOnlyLocationPermissionsState
+            )
+        }
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.FineLocationDisabled.testTag)
+            .assertExists()
+    }
+
     companion object {
-        val LocationPermissionDeniedPermissionsState = object : LocationPermissionsState.Denied() {
+        val DeniedLocationPermissionsState = object : LocationPermissionsState.Denied() {
+            override fun requestPermissions() {
+            }
+        }
+
+        val ApproximateOnlyLocationPermissionsState = object : LocationPermissionsState.ApproximateOnly() {
             override fun requestPermissions() {
             }
         }

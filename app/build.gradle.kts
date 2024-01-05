@@ -21,6 +21,14 @@ android {
                     apiLevel = 31
                     systemImageSource = "aosp-atd"
                 }
+                create("pixel2api30") {
+                    // Use device profiles you typically see in Android Studio.
+                    device = "Pixel 2"
+                    // ATDs currently support only API level 30.
+                    apiLevel = 30
+                    // You can also specify "google-atd" if you require Google Play Services.
+                    systemImageSource = "aosp-atd"
+                }
             }
         }
     }
