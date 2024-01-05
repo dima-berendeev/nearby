@@ -40,7 +40,7 @@ jobs:
         name: lint-report
         path: 'app/reports/lint'
     - name: Unit tests
-      run: ./gradlew testReleaseUnitTest
+      run: ./gradlew testDebugUnitTest
     - name: Junit Test Report
       uses: dorny/test-reporter@v1
       if: always()
