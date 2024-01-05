@@ -97,24 +97,14 @@ class PlacesListScreenKtTest {
             .assertIsDisplayed()
     }
 
-    // Online/offline
+    // Banner
     @Test
-    fun givenOfflineMode_thenOfflineBannerVisible() {
+    fun givenOffline_thenOfflineBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(isOnline = false)
         }
         composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
             .assertExists()
-    }
-
-    @Test
-    fun givenOnlineMode_thenNoOfflineBanner() {
-        composeTestRule.setContent {
-            TestPlacesListScreen(isOnline = true)
-        }
-        composeTestRule.onNodeWithTag("PlacesListScreen")
-        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
-            .assertDoesNotExist()
     }
 
     @Test
@@ -129,7 +119,6 @@ class PlacesListScreenKtTest {
             .assertExists()
     }
 
-    // Location permission
     @Test
     fun givenOnlineAndLocationPermissionDenied_thenLocationPermissionDeniedBannerVisible() {
         composeTestRule.setContent {
@@ -152,6 +141,16 @@ class PlacesListScreenKtTest {
         }
         composeTestRule.onNodeWithTag(PlacesListScreen.Banner.FineLocationDisabled.testTag)
             .assertExists()
+    }
+
+    @Test
+    fun givenOnlineAndLocationPermissionGranted_thenNoBanner() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isOnline = true)
+        }
+        composeTestRule.onNodeWithTag("PlacesListScreen")
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
+            .assertDoesNotExist()
     }
 
     companion object {

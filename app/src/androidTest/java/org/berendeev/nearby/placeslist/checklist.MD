@@ -26,13 +26,11 @@
 - [X] Given Success and list is empty then not found blank is visible
 - [X] Given Failure then blank is visible
 ---
-- [x] Given there is no internet then Offline banner is visible
-- [x] Given there is internet then Offline banner is invisible
+- [x] Given offline then Offline banner is visible
 - [X] Offline banner has priority over location permission banners
----
 - [X] Given online location permissions denied then then banner is visible
-- [ ] Coarse permission only
-- [ ] Fine permission granted then no banners
+- [X] Given online and Coarse permission only then no fine location permission visible
+- [x] Given online and location permission granted then no banner 
 ---
 - [ ] Given location unavailable then icon is unavailable
 - [ ] Given location is expected soon then icon has animation
