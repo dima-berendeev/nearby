@@ -11,6 +11,7 @@ import androidx.compose.ui.test.printToLog
 import androidx.test.core.graphics.writeToTestStorage
 import org.berendeev.nearby.data.model.Place
 import org.berendeev.nearby.data.model.UnknownDataLayerIssue
+import org.berendeev.nearby.ui.CoordinatesIcon
 import org.berendeev.nearby.ui.ErrorBlank
 import org.berendeev.nearby.ui.LoadingBlank
 import org.berendeev.nearby.ui.LocationPermissionsState
@@ -148,9 +149,38 @@ class PlacesListScreenKtTest {
         composeTestRule.setContent {
             TestPlacesListScreen(isOnline = true)
         }
-        composeTestRule.onNodeWithTag("PlacesListScreen")
         composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
             .assertDoesNotExist()
+    }
+
+//    Coordinates icon
+    @Test
+    fun givenCoordinatesAvailable_thenIconIsAvailable() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isCoordinatesAvailable = true)
+        }
+        composeTestRule.onNodeWithTag(CoordinatesIcon.Available.testTag, useUnmergedTree = true)
+            .assertExists()
+    }
+
+    @Test
+    fun givenCoordinatesUnavailable_thenIconIsUnavailable() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isCoordinatesAvailable = false)
+        }
+        composeTestRule.onNodeWithTag(CoordinatesIcon.Unavailable.testTag, useUnmergedTree = true)
+            .assertExists()
+    }
+
+
+
+    @Test
+    fun givenCoordinatesNull_thenIconIsUndefined() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isCoordinatesAvailable = null)
+        }
+        composeTestRule.onNodeWithTag(CoordinatesIcon.Undefined.testTag, useUnmergedTree = true)
+            .assertExists()
     }
 
     companion object {

@@ -10,17 +10,13 @@ android {
     namespace = "org.berendeev.nearby"
     compileSdk = 34
     testOptions {
+        animationsDisabled = true
         unitTests {
             isReturnDefaultValues = true
             isIncludeAndroidResources = true
         }
         managedDevices {
             localDevices {
-                create("Pixel_C") {
-                    device = "Pixel 6"
-                    apiLevel = 31
-                    systemImageSource = "aosp-atd"
-                }
                 create("pixel2api30") {
                     // Use device profiles you typically see in Android Studio.
                     device = "Pixel 2"
