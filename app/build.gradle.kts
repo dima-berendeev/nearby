@@ -78,11 +78,7 @@ android {
         htmlOutput = file("${projectDir}/reports/lint/index.html")
     }
 }
-configurations {
-    androidTestImplementation.configure {
-        isCanBeResolved = true
-    }
-}
+
 dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
