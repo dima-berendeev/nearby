@@ -26,41 +26,35 @@ fun Project.configureJacoco(
     androidComponentsExtension: AndroidComponentsExtension<*, *, *>,
 ) {
 
-    val jacocoTestReport = tasks.create("jacocoTestReport")
-
-    androidComponentsExtension.onVariants { variant ->
-        val testTaskName = "test${variant.name.capitalize()}UnitTest"
-
-        val reportTask = tasks.register("jacoco${testTaskName.capitalize()}Report", JacocoReport::class) {
-            dependsOn(testTaskName)
-            group = "report"
-            reports {
-                xml.required.set(true)
-                html.required.set(true)
-                html.outputLocation.set(layout.projectDirectory.dir("reports/jacoco"))
-            }
-
-            classDirectories.setFrom(
-                fileTree("$buildDir/tmp/kotlin-classes/${variant.name}") {
-                    exclude(coverageExclusions)
-                }
-            )
-
-            sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
-            executionData.setFrom(
-//                layout.buildDirectory.map { it.dir("jacoco").file("testDebugUnitTest.exec") },
-                layout.buildDirectory.map {
-                    it.file("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
-                },
-                layout.buildDirectory.map {
-                    it.file(
-                        "outputs/managed_device_code_coverage/debug/pixel2api30/coverage.ec"
-                    )
-                }
-            )
+    tasks.register("jacocoTestReport", JacocoReport::class) {
+        dependsOn("testsForCoverage")
+        group = "report"
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+            html.outputLocation.set(layout.projectDirectory.dir("reports/jacoco"))
         }
 
-        jacocoTestReport.dependsOn(reportTask)
+        classDirectories.setFrom(
+            layout.buildDirectory.map {
+                it.dir("tmp/kotlin-classes/debug")
+            }.map {
+                it.asFileTree.matching {
+                    exclude(coverageExclusions)
+                }
+            }
+        )
+
+        sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
+        executionData.setFrom(
+            layout.buildDirectory
+                .map { dir ->
+                    dir.asFileTree.matching {
+                        include("**/*.ec")
+                        include("**/*.exec")
+                    }.files
+                }
+        )
     }
 
     tasks.withType<Test>().configureEach {

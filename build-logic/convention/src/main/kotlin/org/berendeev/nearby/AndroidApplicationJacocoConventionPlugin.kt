@@ -13,6 +13,7 @@ class AndroidApplicationJacocoConventionPlugin : Plugin<Project> {
                 apply("com.android.application")
             }
             val extension = extensions.getByType<ApplicationAndroidComponentsExtension>()
+            project.tasks.register("testsForCoverage")
             configureJacoco(extension)
         }
     }

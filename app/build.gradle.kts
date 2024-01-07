@@ -83,6 +83,10 @@ android {
     }
 }
 
+tasks.named("testsForCoverage") {
+    dependsOn("pixel2api30DebugAndroidTest", "testDebugUnitTest")
+}
+
 dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
