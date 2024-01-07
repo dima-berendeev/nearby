@@ -2,14 +2,10 @@ package org.berendeev.nearby
 
 import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
-import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 import java.util.Locale
@@ -26,15 +22,9 @@ private fun String.capitalize() = replaceFirstChar {
     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
 }
 
-val Project.libs
-    get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
 fun Project.configureJacoco(
     androidComponentsExtension: AndroidComponentsExtension<*, *, *>,
 ) {
-    configure<JacocoPluginExtension> {
-        toolVersion = libs.findVersion("jacoco").get().toString()
-    }
 
     val jacocoTestReport = tasks.create("jacocoTestReport")
 
@@ -43,10 +33,11 @@ fun Project.configureJacoco(
 
         val reportTask = tasks.register("jacoco${testTaskName.capitalize()}Report", JacocoReport::class) {
             dependsOn(testTaskName)
-
+            group = "report"
             reports {
                 xml.required.set(true)
                 html.required.set(true)
+                html.outputLocation.set(layout.projectDirectory.dir("reports/jacoco"))
             }
 
             classDirectories.setFrom(
@@ -56,7 +47,17 @@ fun Project.configureJacoco(
             )
 
             sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
-            executionData.setFrom(file("$buildDir/jacoco/$testTaskName.exec"))
+            executionData.setFrom(
+//                layout.buildDirectory.map { it.dir("jacoco").file("testDebugUnitTest.exec") },
+                layout.buildDirectory.map {
+                    it.file("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
+                },
+                layout.buildDirectory.map {
+                    it.file(
+                        "outputs/managed_device_code_coverage/debug/pixel2api30/coverage.ec"
+                    )
+                }
+            )
         }
 
         jacocoTestReport.dependsOn(reportTask)

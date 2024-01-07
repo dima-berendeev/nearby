@@ -47,8 +47,11 @@ android {
     }
     buildTypes {
         debug {
-            isDebuggable = true
-            isProfileable = false
+
+// todo uncomment for Android Studio Iguana/AGP 8.3 .
+// https://issuetracker.google.com/issues/281266702
+//            enableAndroidTestCoverage = true
+//            enableUnitTestCoverage = true
         }
         release {
             isMinifyEnabled = false
