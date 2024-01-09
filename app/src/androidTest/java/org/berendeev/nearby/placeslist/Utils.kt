@@ -9,7 +9,7 @@ fun TestPlacesListScreen(
     query: String = "",
     onQueryChanged: (String) -> Unit = {},
     isOnline: Boolean = true,
-    isCoordinatesAvailable: Boolean = true,
+    isCoordinatesAvailable: Boolean? = true,
     permissionsState: LocationPermissionsState = LocationPermissionsState.Fine
 ) {
     PlacesListScreen(

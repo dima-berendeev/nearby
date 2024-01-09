@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,6 +85,12 @@ private fun ClearIcon(visible: Boolean, onValueChange: (String) -> Unit) {
     }
 }
 
+enum class CoordinatesIcon(val testTag:String){
+     Available("CoordinatesIcon:Available"),
+     Unavailable("CoordinatesIcon:Unavailable"),
+     Undefined("CoordinatesIcon:Undefined"),
+}
+
 @Composable
 private fun CoordinatesIcon(isCoordinatesAvailable: Boolean?) {
     AnimatedContent(
@@ -98,6 +105,7 @@ private fun CoordinatesIcon(isCoordinatesAvailable: Boolean?) {
         when (targetState) {
             true -> {
                 Icon(
+                    modifier = Modifier.testTag(CoordinatesIcon.Available.testTag),
                     painter = painterResource(id = R.drawable.baseline_location_on_24),
                     tint = MaterialTheme.colors.primary,
                     contentDescription = null
@@ -106,6 +114,7 @@ private fun CoordinatesIcon(isCoordinatesAvailable: Boolean?) {
 
             false -> {
                 Icon(
+                    modifier = Modifier.testTag(CoordinatesIcon.Unavailable.testTag),
                     painter = painterResource(id = R.drawable.baseline_location_off_24),
                     tint = MaterialTheme.colors.error,
                     contentDescription = null
@@ -125,6 +134,7 @@ private fun CoordinatesIcon(isCoordinatesAvailable: Boolean?) {
                 )
 
                 Icon(
+                    modifier = Modifier.testTag(CoordinatesIcon.Undefined.testTag),
                     painter = painterResource(id = R.drawable.baseline_location_on_24),
                     tint = color,
                     contentDescription = null

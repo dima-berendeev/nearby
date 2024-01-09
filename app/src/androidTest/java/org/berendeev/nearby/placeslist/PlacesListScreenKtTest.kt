@@ -11,6 +11,7 @@ import androidx.compose.ui.test.printToLog
 import androidx.test.core.graphics.writeToTestStorage
 import org.berendeev.nearby.data.model.Place
 import org.berendeev.nearby.data.model.UnknownDataLayerIssue
+import org.berendeev.nearby.ui.CoordinatesIcon
 import org.berendeev.nearby.ui.ErrorBlank
 import org.berendeev.nearby.ui.LoadingBlank
 import org.berendeev.nearby.ui.LocationPermissionsState
@@ -39,6 +40,7 @@ class PlacesListScreenKtTest {
         }
     }
 
+    // Data related
     @Test
     fun givenStateLoading_thenProgressIsVisible() {
         composeTestRule.setContent {
@@ -96,39 +98,98 @@ class PlacesListScreenKtTest {
             .assertIsDisplayed()
     }
 
+    // Banner
     @Test
-    fun givenLocationUnavailable_thenBannerVisible() {
+    fun givenOffline_thenOfflineBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(isOnline = false)
         }
-        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.Offline.asString)
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
             .assertExists()
     }
 
     @Test
-    fun givenLocationAvailable_thenNoOfflineBanner() {
+    fun givenOfflineAndLocationPermissionDenied_thenOfflineBannerVisible() {
         composeTestRule.setContent {
-            TestPlacesListScreen(isOnline = true)
+            TestPlacesListScreen(
+                isOnline = false,
+                permissionsState = DeniedLocationPermissionsState
+            )
         }
-        composeTestRule.onNodeWithTag("PlacesListScreen")
-        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.Offline.asString)
-            .assertDoesNotExist()
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
+            .assertExists()
     }
 
     @Test
-    fun givenOnlineAndPermissionDenied_thenPermissionBannerVisible() {
+    fun givenOnlineAndLocationPermissionDenied_thenLocationPermissionDeniedBannerVisible() {
         composeTestRule.setContent {
             TestPlacesListScreen(
                 isOnline = true,
-                permissionsState = DeniedPermissionsState
+                permissionsState = DeniedLocationPermissionsState
             )
         }
-        composeTestRule.onNodeWithTag(PlacesListScreen.BannerTestTags.LocationPermissionDenied.asString)
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.LocationPermissionDenied.testTag)
+            .assertExists()
+    }
+
+    @Test
+    fun givenOnlineAndCoarseLocationPermissionAllowed_thenFineLocationPermissionDeniedBannerVisible() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(
+                isOnline = true,
+                permissionsState = ApproximateOnlyLocationPermissionsState
+            )
+        }
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.FineLocationDisabled.testTag)
+            .assertExists()
+    }
+
+    @Test
+    fun givenOnlineAndLocationPermissionGranted_thenNoBanner() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isOnline = true)
+        }
+        composeTestRule.onNodeWithTag(PlacesListScreen.Banner.Offline.testTag)
+            .assertDoesNotExist()
+    }
+
+//    Coordinates icon
+    @Test
+    fun givenCoordinatesAvailable_thenIconIsAvailable() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isCoordinatesAvailable = true)
+        }
+        composeTestRule.onNodeWithTag(CoordinatesIcon.Available.testTag, useUnmergedTree = true)
+            .assertExists()
+    }
+
+    @Test
+    fun givenCoordinatesUnavailable_thenIconIsUnavailable() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isCoordinatesAvailable = false)
+        }
+        composeTestRule.onNodeWithTag(CoordinatesIcon.Unavailable.testTag, useUnmergedTree = true)
+            .assertExists()
+    }
+
+
+
+    @Test
+    fun givenCoordinatesNull_thenIconIsUndefined() {
+        composeTestRule.setContent {
+            TestPlacesListScreen(isCoordinatesAvailable = null)
+        }
+        composeTestRule.onNodeWithTag(CoordinatesIcon.Undefined.testTag, useUnmergedTree = true)
             .assertExists()
     }
 
     companion object {
-        val DeniedPermissionsState = object : LocationPermissionsState.Denied() {
+        val DeniedLocationPermissionsState = object : LocationPermissionsState.Denied() {
+            override fun requestPermissions() {
+            }
+        }
+
+        val ApproximateOnlyLocationPermissionsState = object : LocationPermissionsState.ApproximateOnly() {
             override fun requestPermissions() {
             }
         }

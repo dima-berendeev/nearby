@@ -62,6 +62,10 @@ fun Banner(data: BannerData?, modifier: Modifier = Modifier, onButtonClicked: ((
     }
 }
 
+internal object Banner {
+    val testTag = "Banner"
+}
+
 @Preview()
 @Composable
 private fun BannerPreview() {
