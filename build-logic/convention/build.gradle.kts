@@ -8,6 +8,12 @@ dependencies {
     implementation("com.android.tools.build:gradle:8.1.2")
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
 gradlePlugin {
     plugins {
         register("androidApplicationJacoco") {
