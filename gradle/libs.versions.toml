@@ -1,4 +1,7 @@
 [versions]
+org-jetbrains-kotlin-android = "1.8.10"
+agp = "8.1.2"
+
 coil-compose = "2.5.0"
 core-ktx = "1.12.0"
 activity-compose = "1.8.0"
@@ -20,6 +23,8 @@ coroutines = "1.7.3"
 turbine = "1.0.0"
 
 jacoco = "0.8.7"
+appcompat = "1.6.1"
+material = "1.11.0"
 
 [libraries]
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
@@ -57,7 +62,13 @@ io-mockk = { group = "io.mockk", name = "mockk", version = "1.13.4" }
 kotlin-kotlinTest = { group = "org.jetbrains.kotlin", name = "kotlin-test", version = "1.8.10" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+com-android-aplication = { id = "com.android.application", version.ref = "agp" }
+com-android-library = { id = "com.android.library", version.ref = "agp" }
+com-android-test = { id = "com.android.test", version.ref = "agp" }
 
 [bundles]

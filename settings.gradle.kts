@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "nearby"
 include(":app")
+include(":bigtests")
