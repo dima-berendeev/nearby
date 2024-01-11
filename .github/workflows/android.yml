@@ -5,17 +5,14 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
+  checks: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 jobs:
   build:
     env:
@@ -31,20 +28,42 @@ jobs:
         cache: 'gradle'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew :app:lint -i
+# Checks
+    - name: Lint checks
+      run: ./gradlew :app:lint
     - name: Upload lint reports (HTML)
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: lint-report
         path: 'app/reports/lint'
+# Junit tests
     - name: Unit tests
-      run: ./gradlew test
+      run: ./gradlew testDebugUnitTest
+    - name: Junit Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: JUnit Tests
+        path: app/build/test-results/testDebugUnitTest/TEST-*.xml
+        reporter: java-junit
+        fail-on-error: false
+#   Android test
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+    - name: Android Pixel 2 api30 Setup
+      run: ./gradlew :app:pixel2api30Setup --stacktrace
     - name: Android tests
-      run: ./gradlew :app:Pixel_CDebugAndroidTest --stacktrace
+      run: ./gradlew :app:pixel2api30DebugAndroidTest --stacktrace
+    - name: Android Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Android Tests
+        path: app/build/outputs/androidTest-results/managedDevice/debug/**/TEST-*.xml
+        reporter: java-junit
+        fail-on-error: false
+# Build and upload
     - name: Assemble debug
       run: ./gradlew :app:assembleDebug
     - name: Upload debug apk

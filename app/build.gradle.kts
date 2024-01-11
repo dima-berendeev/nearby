@@ -1,24 +1,30 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.com.android.aplication)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     kotlin("plugin.serialization")
+    id("nearby.android.application.jacoco")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 android {
     namespace = "org.berendeev.nearby"
     compileSdk = 34
     testOptions {
+        animationsDisabled = true
         unitTests {
             isReturnDefaultValues = true
             isIncludeAndroidResources = true
         }
         managedDevices {
             localDevices {
-                create("Pixel_C") {
-                    device = "Pixel 6"
-                    apiLevel = 31
+                create("pixel2api30") {
+                    // Use device profiles you typically see in Android Studio.
+                    device = "Pixel 2"
+                    // ATDs currently support only API level 30.
+                    apiLevel = 30
+                    // You can also specify "google-atd" if you require Google Play Services.
                     systemImageSource = "aosp-atd"
                 }
             }
@@ -42,8 +48,11 @@ android {
     }
     buildTypes {
         debug {
-            isDebuggable = true
-            isProfileable = false
+
+// todo uncomment for Android Studio Iguana/AGP 8.3 .
+// https://issuetracker.google.com/issues/281266702
+//            enableAndroidTestCoverage = true
+//            enableUnitTestCoverage = true
         }
         release {
             isMinifyEnabled = false
@@ -74,11 +83,11 @@ android {
         htmlOutput = file("${projectDir}/reports/lint/index.html")
     }
 }
-configurations {
-    androidTestImplementation.configure {
-        isCanBeResolved = true
-    }
+
+tasks.named("testsForCoverage") {
+    dependsOn("pixel2api30DebugAndroidTest", "testDebugUnitTest")
 }
+
 dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)

@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -15,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "nearby"
 include(":app")
+include(":bigtests")

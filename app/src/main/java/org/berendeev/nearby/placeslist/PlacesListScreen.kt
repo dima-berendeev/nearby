@@ -142,7 +142,7 @@ internal fun PlacesListScreen(
 }
 
 object PlacesListScreen {
-    enum class BannerTestTags(val asString: String) {
+    enum class Banner(val testTag: String) {
         Offline("NetworkUnavailableBanner"),
         LocationPermissionDenied("LocationPermissionDeniedBanner"),
         FineLocationDisabled("FineLocationDisabledBanner")
@@ -156,7 +156,7 @@ private fun IssueBanner(permissionsState: LocationPermissionsState, isOnline: Bo
             Banner(
                 BannerData(
                     text = "Offline mode",
-                    testTag = PlacesListScreen.BannerTestTags.Offline.asString
+                    testTag = PlacesListScreen.Banner.Offline.testTag
                 )
             )
         }
@@ -165,7 +165,7 @@ private fun IssueBanner(permissionsState: LocationPermissionsState, isOnline: Bo
             Banner(
                 BannerData(
                     text = "Location permissions are disabled",
-                    testTag = PlacesListScreen.BannerTestTags.LocationPermissionDenied.asString,
+                    testTag = PlacesListScreen.Banner.LocationPermissionDenied.testTag,
                     buttonLabel = "TURN ON"
                 ),
                 onButtonClicked = { permissionsState.requestPermissions() }
@@ -176,7 +176,7 @@ private fun IssueBanner(permissionsState: LocationPermissionsState, isOnline: Bo
             Banner(
                 data = BannerData(
                     text = "Fine location disabled",
-                    testTag = PlacesListScreen.BannerTestTags.FineLocationDisabled.asString,
+                    testTag = PlacesListScreen.Banner.FineLocationDisabled.testTag,
                     "TURN ON"
                 ),
                 onButtonClicked = { permissionsState.requestPermissions() }
