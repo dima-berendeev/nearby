@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.test)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    kotlin("kapt")
 }
 
 android {
@@ -11,7 +12,7 @@ android {
         minSdk = 30
         testHandleProfiling = true
         testFunctionalTest = true
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "org.berendeev.bigtests.CustomTestRunner"
     }
 
     kotlin {
@@ -24,11 +25,17 @@ android {
 dependencies {
     implementation(project(":app"))
     implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
     implementation(libs.junit)
     implementation(libs.ext.junit)
     implementation(libs.espresso.core)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging)
+
     implementation("androidx.test:runner:1.4.0")
     implementation("androidx.test:rules:1.4.0")
+    implementation(libs.hilt.android.testing)
+    kapt(libs.hilt.android.compiler)
 }
