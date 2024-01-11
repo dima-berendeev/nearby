@@ -33,6 +33,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.mock)
 
     implementation("androidx.test:runner:1.4.0")
     implementation("androidx.test:rules:1.4.0")
