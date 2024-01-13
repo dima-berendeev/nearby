@@ -2,9 +2,11 @@ package org.berendeev.bigtests
 
 import android.util.Log
 import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.test.SemanticsNodeInteraction
-import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.printToLog
@@ -26,7 +28,9 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.berendeev.nearby.MainActivity
 import org.berendeev.nearby.di.NetworkModule
+import org.berendeev.nearby.placeslist.PlaceItem
 import org.berendeev.nearby.placeslist.PlacesItems
+import org.berendeev.nearby.ui.LoadingBlank
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestWatcher
@@ -39,12 +43,12 @@ class ExampleInstrumentedTest {
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val activityRule = createAndroidComposeRule<MainActivity>()
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @get:Rule(order = 2)
     val testWatcher = object : TestWatcher() {
         override fun failed(e: Throwable?, description: Description) {
-            activityRule.onNodeWithTag("PlacesListScreen", useUnmergedTree = true)
+            composeTestRule.onNodeWithTag("PlacesListScreen", useUnmergedTree = true)
                 .apply {
                     printToLog("ui-tree")
 
@@ -75,7 +79,7 @@ class ExampleInstrumentedTest {
         engine {
             addHandler { request ->
                 if (request.url.encodedPath == "/v3/places/nearby") {
-                    respond(readAsset("places.json"), HttpStatusCode.OK, responseHeaders)
+                    respond(readAsset("places_5.json"), HttpStatusCode.OK, responseHeaders)
                 } else {
                     respond("The Url was not found in ktor mock", HttpStatusCode.NotFound, responseHeaders)
                 }
@@ -83,19 +87,26 @@ class ExampleInstrumentedTest {
         }
     }
 
+    @OptIn(ExperimentalTestApi::class)
     @Test
-    fun showActivity() = runTest {
-        activityRule.onPlacesItems()
-            .assertExists()
+    fun loadAndShowDefaultPlacesPlaces() = runTest {
+        composeTestRule
+            .waitUntilDoesNotExist(hasTestTag(LoadingBlank.testTag))
+        composeTestRule
+            .onNode(hasPlacesTestTag())
+            .assertExists("No places shown")
+
+        composeTestRule.onAllNodes(hasTestTag(PlaceItem.testTag))
+            .assertCountEquals(5)
     }
 
     private fun readAsset(name: String): ByteReadChannel {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val context = InstrumentationRegistry.getInstrumentation().context
         return context.assets.open(name).toByteReadChannel()
     }
 }
 
 // todo make it fixture
-fun SemanticsNodeInteractionsProvider.onPlacesItems(): SemanticsNodeInteraction {
-    return this.onNodeWithTag(PlacesItems.testTag, useUnmergedTree = true)
+fun hasPlacesTestTag(): SemanticsMatcher {
+    return hasTestTag(PlacesItems.testTag)
 }

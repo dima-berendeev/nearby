@@ -14,17 +14,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import org.berendeev.nearby.data.model.Location
 import org.berendeev.nearby.data.model.Place
 
+object PlaceItem {
+    val testTag = "PlaceItem"
+}
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PlaceItem(place: Place) {
     ListItem(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .testTag(PlaceItem.testTag)
+            .fillMaxWidth(),
         icon = {
             val iconSize = 64.dp
             val iconSizePx = with(LocalDensity.current) { iconSize.toPx() }.toInt()
