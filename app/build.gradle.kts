@@ -111,7 +111,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material:material")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.ktor.client.android)
     implementation(libs.coil.compose)
     implementation(libs.accompanist.permissions)
@@ -131,8 +131,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.mockk.agent)
-    androidTestUtil("androidx.test.services:test-services:1.5.0-alpha02")
+    androidTestUtil(libs.androidx.test.services)
 }

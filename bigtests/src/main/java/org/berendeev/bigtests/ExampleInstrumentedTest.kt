@@ -1,7 +1,14 @@
 package org.berendeev.bigtests
 
 import android.util.Log
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.test.SemanticsNodeInteraction
+import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
+import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.printToLog
+import androidx.test.core.graphics.writeToTestStorage
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -15,11 +22,15 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.berendeev.nearby.MainActivity
 import org.berendeev.nearby.di.NetworkModule
+import org.berendeev.nearby.placeslist.PlacesItems
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 
 @HiltAndroidTest
 @UninstallModules(NetworkModule::class)
@@ -28,7 +39,21 @@ class ExampleInstrumentedTest {
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityRule = createAndroidComposeRule<MainActivity>()
+
+    @get:Rule(order = 2)
+    val testWatcher = object : TestWatcher() {
+        override fun failed(e: Throwable?, description: Description) {
+            activityRule.onNodeWithTag("PlacesListScreen", useUnmergedTree = true)
+                .apply {
+                    printToLog("ui-tree")
+
+                    captureToImage()
+                        .asAndroidBitmap()
+                        .writeToTestStorage("${description.className}/${description.methodName}")
+                }
+        }
+    }
 
     private val responseHeaders = headersOf("Content-Type" to listOf(ContentType.Application.Json.toString()))
 
@@ -59,12 +84,18 @@ class ExampleInstrumentedTest {
     }
 
     @Test
-    fun showActivity() {
-        Thread.sleep(2000)
+    fun showActivity() = runTest {
+        activityRule.onPlacesItems()
+            .assertExists()
     }
 
     private fun readAsset(name: String): ByteReadChannel {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         return context.assets.open(name).toByteReadChannel()
     }
+}
+
+// todo make it fixture
+fun SemanticsNodeInteractionsProvider.onPlacesItems(): SemanticsNodeInteraction {
+    return this.onNodeWithTag(PlacesItems.testTag, useUnmergedTree = true)
 }

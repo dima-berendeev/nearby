@@ -13,6 +13,7 @@ android {
         testHandleProfiling = true
         testFunctionalTest = true
         testInstrumentationRunner = "org.berendeev.bigtests.CustomTestRunner"
+        testInstrumentationRunnerArguments += "useTestStorageService" to "true"
     }
 
     kotlin {
@@ -28,6 +29,8 @@ dependencies {
     implementation(libs.junit)
     implementation(libs.ext.junit)
     implementation(libs.espresso.core)
+    implementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.ui.test.junit4)
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.serialization.kotlinx.json)
@@ -39,4 +42,5 @@ dependencies {
     implementation("androidx.test:rules:1.4.0")
     implementation(libs.hilt.android.testing)
     kapt(libs.hilt.android.compiler)
+    androidTestUtil(libs.androidx.test.services)
 }
