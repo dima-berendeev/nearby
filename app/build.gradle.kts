@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.serialization")
     id("nearby.android.application.jacoco")
     id("org.jetbrains.kotlinx.kover")
+    id("io.github.takahirom.roborazzi")
 }
 
 android {
@@ -61,7 +62,7 @@ android {
     }
 
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(17)
     }
 
     buildFeatures {
@@ -123,6 +124,11 @@ dependencies {
     testImplementation(libs.io.mockk)
     testImplementation(libs.kotlin.kotlinTest)
     testImplementation(libs.turbine)
+    testImplementation(libs.androidx.ui.test.junit4)
+    testImplementation("org.robolectric:robolectric:4.11.1")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi:1.8.0-rc-2")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi-compose:1.8.0-rc-2")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi-junit-rule:1.8.0-rc-2")
 
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
