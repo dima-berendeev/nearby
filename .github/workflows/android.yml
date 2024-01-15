@@ -12,11 +12,10 @@ permissions:
   id-token: write
   actions: read
   checks: write
+  pull-requests: write
 
 jobs:
   build:
-    permissions:
-      pull-requests: write
     env:
       FOURSQUARE_API_KEY: ${{secrets.FOURSQUARE_API_KEY}}
     runs-on: macos-latest
