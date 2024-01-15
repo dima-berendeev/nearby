@@ -4,7 +4,6 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     kotlin("plugin.serialization")
-    id("nearby.android.application.jacoco")
     id("org.jetbrains.kotlinx.kover")
     id("io.github.takahirom.roborazzi")
 }
@@ -17,18 +16,6 @@ android {
         unitTests {
             isReturnDefaultValues = true
             isIncludeAndroidResources = true
-        }
-        managedDevices {
-            localDevices {
-                create("pixel2api30") {
-                    // Use device profiles you typically see in Android Studio.
-                    device = "Pixel 2"
-                    // ATDs currently support only API level 30.
-                    apiLevel = 30
-                    // You can also specify "google-atd" if you require Google Play Services.
-                    systemImageSource = "aosp-atd"
-                }
-            }
         }
     }
     defaultConfig {
@@ -83,10 +70,6 @@ android {
         htmlReport = true
         htmlOutput = file("${projectDir}/reports/lint/index.html")
     }
-}
-
-tasks.named("testsForCoverage") {
-    dependsOn("pixel2api30DebugAndroidTest", "testDebugUnitTest")
 }
 
 dependencies {

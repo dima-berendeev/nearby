@@ -39,7 +39,7 @@ jobs:
         path: 'app/reports/lint'
 # Junit tests
     - name: Unit tests
-      run: ./gradlew testDebugUnitTest
+      run: ./gradlew :app:testDebugUnitTest
     - name: Junit Test Report
       uses: dorny/test-reporter@v1
       if: always()
@@ -48,19 +48,26 @@ jobs:
         path: app/build/test-results/testDebugUnitTest/TEST-*.xml
         reporter: java-junit
         fail-on-error: false
-#   Android test
+    - name: Kover html report
+      run: ./gradlew :app:koverHtmlReportDebug
+    - name: Upload kover html report
+      uses: actions/upload-artifact@v4
+      with:
+        name: kover-html-report
+        path: 'app/build/reports/kover/htmlDebug'
+# Big(e2e) tests
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     - name: Android Pixel 2 api30 Setup
-      run: ./gradlew :app:pixel2api30Setup --stacktrace
-    - name: Android tests
-      run: ./gradlew :app:pixel2api30DebugAndroidTest --stacktrace
+      run: ./gradlew :bigtests:pixel2api30Setup --stacktrace
+    - name: Big(e2e) tests
+      run: ./gradlew :bigtests:pixel2api30DebugAndroidTest --stacktrace
     - name: Android Test Report
       uses: dorny/test-reporter@v1
       if: always()
       with:
         name: Android Tests
-        path: app/build/outputs/androidTest-results/managedDevice/debug/**/TEST-*.xml
+        path: bigtests/build/outputs/androidTest-results/managedDevice/debug/**/TEST-*.xml
         reporter: java-junit
         fail-on-error: false
 # Build and upload
