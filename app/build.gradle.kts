@@ -81,6 +81,7 @@ koverReport{
                 classes("*hilt*")
                 classes("*Hilt*")
                 annotatedBy("*Generated*")
+                annotatedBy("*Preview*")
                 annotatedBy("*Serializable*")
             }
         }

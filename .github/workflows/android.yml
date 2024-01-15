@@ -62,7 +62,7 @@ jobs:
       uses: mi-kas/kover-report@v1
       with:
         path: |
-          ${{ github.workspace }}/app/build/reports/kover/report.xml
+          ${{ github.workspace }}/app/build/reports/kover/reportDebug.xml
         title: Code Coverage
         update-comment: true
 # Big(e2e) tests
