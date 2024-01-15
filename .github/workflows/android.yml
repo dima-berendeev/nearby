@@ -55,6 +55,16 @@ jobs:
       with:
         name: kover-html-report
         path: 'app/build/reports/kover/htmlDebug'
+    - name: Kover xml report
+      run: ./gradlew :app:koverXmlReportDebug
+    - name: Add coverage report to PR
+      id: kover
+      uses: mi-kas/kover-report@v1
+      with:
+        path: |
+          ${{ github.workspace }}/app/build/reports/kover/report.xml
+        title: Code Coverage
+        update-comment: true
 # Big(e2e) tests
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
