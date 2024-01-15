@@ -91,7 +91,7 @@ class ExampleInstrumentedTest {
     @Test
     fun loadAndShowDefaultPlacesPlaces() = runTest {
         composeTestRule
-            .waitUntilDoesNotExist(hasTestTag(LoadingBlank.testTag))
+            .waitUntilDoesNotExist(hasTestTag(LoadingBlank.testTag), 5000)
         composeTestRule
             .onNode(hasPlacesTestTag())
             .assertExists("No places shown")

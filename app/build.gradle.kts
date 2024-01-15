@@ -72,6 +72,21 @@ android {
     }
 }
 
+koverReport{
+    androidReports("debug"){
+        filters{
+            excludes{
+                classes("*BuildConfig*")
+                classes("*ComposableSingletons*")
+                classes("*hilt*")
+                classes("*Hilt*")
+                annotatedBy("*Generated*")
+                annotatedBy("*Serializable*")
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
