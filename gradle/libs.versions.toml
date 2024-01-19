@@ -6,7 +6,7 @@ coil-compose = "2.5.0"
 core-ktx = "1.12.0"
 activity-compose = "1.8.0"
 lifecycle-runtime-ktx = "2.6.2"
-hilt-android = "2.47"
+hilt-android = "2.48"
 hilt-navigation-compose = "1.1.0"
 kotlinx-serialization-json = "1.6.0"
 ktor = "2.3.5"
@@ -20,6 +20,8 @@ junit = "4.13.2"
 androidx-junit = "1.1.5"
 espresso-core = "3.5.1"
 coroutines = "1.7.3"
+robolectric = "4.11.1"
+roborazzi = "1.8.0-rc-2"
 test-services = "1.5.0-alpha02"
 turbine = "1.0.0"
 
@@ -67,6 +69,10 @@ espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref =
 io-mockk = { group = "io.mockk", name = "mockk", version = "1.13.4" }
 kotlin-kotlinTest = { group = "org.jetbrains.kotlin", name = "kotlin-test", version = "1.8.10" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+roborazzi-compose = { module = "io.github.takahirom.roborazzi:roborazzi-compose", version.ref = "roborazzi" }
+roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
+roborazzi-junit-rule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }

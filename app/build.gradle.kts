@@ -72,10 +72,10 @@ android {
     }
 }
 
-koverReport{
-    androidReports("debug"){
-        filters{
-            excludes{
+koverReport {
+    androidReports("debug") {
+        filters {
+            excludes {
                 classes("*BuildConfig*")
                 classes("*ComposableSingletons*")
                 classes("*hilt*")
@@ -124,11 +124,13 @@ dependencies {
     testImplementation(libs.kotlin.kotlinTest)
     testImplementation(libs.turbine)
     testImplementation(libs.androidx.ui.test.junit4)
-    testImplementation("org.robolectric:robolectric:4.11.1")
-    testImplementation("io.github.takahirom.roborazzi:roborazzi:1.8.0-rc-2")
-    testImplementation("io.github.takahirom.roborazzi:roborazzi-compose:1.8.0-rc-2")
-    testImplementation("io.github.takahirom.roborazzi:roborazzi-junit-rule:1.8.0-rc-2")
-
+    testImplementation(libs.robolectric)
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.android.compiler)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.junit.rule)
+    testImplementation(libs.ktor.client.mock)
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
 
