@@ -112,7 +112,23 @@ class ExampleRoboTest {
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun loadAndShowDefaultPlacesPlaces() = runTest {
+        enableNetwork()
+        composeTestRule
+            .onNode(hasTestTag(LoadingBlank.testTag))
+            .assertExists("No progress")
+        composeTestRule
+            .waitUntilDoesNotExist(hasTestTag(LoadingBlank.testTag), 5000)
+        composeTestRule
+            .onNode(hasPlacesTestTag())
+            .assertExists("No places shown")
+
+        composeTestRule.onAllNodes(hasTestTag(PlaceItem.testTag))
+            .assertCountEquals(5)
+    }
+
+    private fun enableNetwork() {
         // todo find a solution for the connectivity manager issue
+        // https://github.com/robolectric/robolectric/issues/5586
         val connectivityManager = getApplicationContext<Context>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkCapabilities = ShadowNetworkCapabilities.newInstance()
         shadowOf(networkCapabilities).addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
@@ -123,18 +139,6 @@ class ExampleRoboTest {
             val networkType1 = ShadowNetwork.newInstance(1)
             it.onAvailable(networkType1)
         }
-
-        composeTestRule
-            .onNode(hasTestTag(LoadingBlank.testTag))
-            .assertExists("No pro")
-        composeTestRule
-            .waitUntilDoesNotExist(hasTestTag(LoadingBlank.testTag), 5000)
-        composeTestRule
-            .onNode(hasPlacesTestTag())
-            .assertExists("No places shown")
-
-        composeTestRule.onAllNodes(hasTestTag(PlaceItem.testTag))
-            .assertCountEquals(5)
     }
 
     @Test
