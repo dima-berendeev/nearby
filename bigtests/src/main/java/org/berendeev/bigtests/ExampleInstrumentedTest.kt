@@ -8,9 +8,11 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.printToLog
+import androidx.compose.ui.test.printToString
 import androidx.test.core.app.takeScreenshot
 import androidx.test.core.graphics.writeToTestStorage
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.services.storage.TestStorage
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -37,6 +39,7 @@ import org.junit.runner.Description
 
 @HiltAndroidTest
 @UninstallModules(NetworkModule::class)
+@androidx.test.annotation.ExperimentalTestApi
 class ExampleInstrumentedTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -50,10 +53,13 @@ class ExampleInstrumentedTest {
             composeTestRule.onNodeWithTag("PlacesListScreen", useUnmergedTree = true)
                 .apply {
                     printToLog("ui-tree")
-
-                    takeScreenshot()
-                        .writeToTestStorage("${description.className}/${description.methodName}")
+                    val storage = TestStorage()
+                    storage.openOutputFile("${description.className}/${description.methodName}", true).use {
+                        it.write(printToString().toByteArray())
+                    }
                 }
+            takeScreenshot()
+                .writeToTestStorage("${description.className}/${description.methodName}")
         }
     }
 
@@ -88,6 +94,7 @@ class ExampleInstrumentedTest {
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun loadAndShowDefaultPlacesPlaces() = runTest {
+
         composeTestRule
             .waitUntilDoesNotExist(hasTestTag(LoadingBlank.testTag), 5000)
         composeTestRule
