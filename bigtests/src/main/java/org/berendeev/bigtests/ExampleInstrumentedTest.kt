@@ -1,15 +1,14 @@
 package org.berendeev.bigtests
 
 import android.util.Log
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertCountEquals
-import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.printToLog
+import androidx.test.core.app.takeScreenshot
 import androidx.test.core.graphics.writeToTestStorage
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.BindValue
@@ -52,8 +51,7 @@ class ExampleInstrumentedTest {
                 .apply {
                     printToLog("ui-tree")
 
-                    captureToImage()
-                        .asAndroidBitmap()
+                    takeScreenshot()
                         .writeToTestStorage("${description.className}/${description.methodName}")
                 }
         }

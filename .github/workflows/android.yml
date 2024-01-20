@@ -70,9 +70,9 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     - name: Android Pixel 2 api30 Setup
-      run: ./gradlew :bigtests:pixel2api30Setup --stacktrace
+      run: ./gradlew :bigtests:mainDeviceSetup --stacktrace
     - name: Big(e2e) tests
-      run: ./gradlew :bigtests:pixel2api30DebugAndroidTest --stacktrace
+      run: ./gradlew :bigtests:mainDeviceDebugAndroidTest --stacktrace
     - name: Android Test Report
       uses: dorny/test-reporter@v1
       if: always()

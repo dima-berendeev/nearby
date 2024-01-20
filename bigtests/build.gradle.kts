@@ -17,7 +17,7 @@ android {
     }
 
     testOptions {
-// is it working functional at all?
+// now the android tests never finish if uncomment following lines
 //        emulatorSnapshots {
 //            enableForTestFailures = true
 //            maxSnapshotsForTestFailures = 2
@@ -25,13 +25,13 @@ android {
         animationsDisabled = false
         managedDevices {
             localDevices {
-                create("pixel2api30") {
+                create("mainDevice") {
                     // Use device profiles you typically see in Android Studio.
                     device = "Pixel 2"
                     // ATDs currently support only API level 30.
-                    apiLevel = 30
+                    apiLevel = 33
                     // You can also specify "google-atd" if you require Google Play Services.
-                    systemImageSource = "aosp-atd"
+                    systemImageSource = "google-atd"
                 }
             }
         }
