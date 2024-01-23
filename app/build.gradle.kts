@@ -119,6 +119,7 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.play.services.location)
     implementation(libs.kotlin.coroutines.play)
+    implementation("androidx.compose.material:material-icons-extended-android")
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
