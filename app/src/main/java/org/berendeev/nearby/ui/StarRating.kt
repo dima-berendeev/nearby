@@ -1,6 +1,5 @@
 package org.berendeev.nearby.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,15 +21,18 @@ import kotlin.math.roundToInt
 @Composable
 fun StarRating(rating: Float, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
-        for (i in 1..5)
-            Box(modifier = Modifier.size(24.dp)) {
-                val icon = if (i <= rating.roundToInt()) {
+        for (i in 1..5) {
+            Icon(
+                imageVector = if (i <= rating.roundToInt()) {
                     Icons.Outlined.Star
                 } else {
                     Icons.Outlined.StarOutline
-                }
-                Icon(imageVector = icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
-            }
+                },
+                contentDescription = null,
+                tint = MaterialTheme.colors.secondaryVariant,
+                modifier = Modifier.size(24.dp)
+            )
+        }
     }
 }
 
