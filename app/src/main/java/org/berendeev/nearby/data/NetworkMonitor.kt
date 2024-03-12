@@ -56,8 +56,7 @@ class ConnectivityManagerNetworkMonitor @Inject constructor(
         awaitClose {
             connectivityManager.unregisterNetworkCallback(callback)
         }
-    }.debounce(1.seconds)
-        .conflate()
+    }.conflate()
 
     private fun ConnectivityManager.isCurrentlyConnected() = activeNetwork
         ?.let(::getNetworkCapabilities)

@@ -185,7 +185,7 @@ private fun IssueBanner(permissionsState: LocationPermissionsState, isOnline: Bo
     }
 }
 
-internal object PlacesItems {
+object PlacesItems {
     val testTag = "PlacesItems"
 }
 

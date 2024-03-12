@@ -1,14 +1,14 @@
 package org.berendeev.nearby.placeslist
 
 import androidx.activity.ComponentActivity
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToLog
-import androidx.test.core.graphics.writeToTestStorage
+import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
+import com.github.takahirom.roborazzi.captureRoboImage
 import org.berendeev.nearby.data.model.Place
 import org.berendeev.nearby.data.model.UnknownDataLayerIssue
 import org.berendeev.nearby.ui.CoordinatesIcon
@@ -19,7 +19,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
 
+@RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(qualifiers = RobolectricDeviceQualifiers.Pixel6)
 class PlacesListScreenKtTest {
     @get:Rule(order = 0)
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
@@ -29,14 +36,13 @@ class PlacesListScreenKtTest {
     @get:Rule(order = 1)
     val testWatcher = object : TestWatcher() {
         override fun failed(e: Throwable?, description: Description) {
-            composeTestRule.onNodeWithTag("PlacesListScreen", useUnmergedTree = true)
-                .apply {
-                    printToLog("ui-tree")
-
-                    captureToImage()
-                        .asAndroidBitmap()
-                        .writeToTestStorage("${description.className}/${description.methodName}")
-                }
+            val nodeInteraction = composeTestRule.onRoot()
+            nodeInteraction.printToLog("ui-tree")
+            try {
+                nodeInteraction.captureRoboImage("reports/test-failures/${description.className}/${description.methodName}.png")
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -153,7 +159,7 @@ class PlacesListScreenKtTest {
             .assertDoesNotExist()
     }
 
-//    Coordinates icon
+    //    Coordinates icon
     @Test
     fun givenCoordinatesAvailable_thenIconIsAvailable() {
         composeTestRule.setContent {
@@ -171,7 +177,6 @@ class PlacesListScreenKtTest {
         composeTestRule.onNodeWithTag(CoordinatesIcon.Unavailable.testTag, useUnmergedTree = true)
             .assertExists()
     }
-
 
 
     @Test

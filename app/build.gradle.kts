@@ -4,8 +4,8 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     kotlin("plugin.serialization")
-    id("nearby.android.application.jacoco")
     id("org.jetbrains.kotlinx.kover")
+    id("io.github.takahirom.roborazzi")
 }
 
 android {
@@ -16,18 +16,6 @@ android {
         unitTests {
             isReturnDefaultValues = true
             isIncludeAndroidResources = true
-        }
-        managedDevices {
-            localDevices {
-                create("pixel2api30") {
-                    // Use device profiles you typically see in Android Studio.
-                    device = "Pixel 2"
-                    // ATDs currently support only API level 30.
-                    apiLevel = 30
-                    // You can also specify "google-atd" if you require Google Play Services.
-                    systemImageSource = "aosp-atd"
-                }
-            }
         }
     }
     defaultConfig {
@@ -61,7 +49,7 @@ android {
     }
 
     kotlin {
-        jvmToolchain(11)
+        jvmToolchain(17)
     }
 
     buildFeatures {
@@ -69,7 +57,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
     }
     packaging {
         resources {
@@ -84,8 +72,20 @@ android {
     }
 }
 
-tasks.named("testsForCoverage") {
-    dependsOn("pixel2api30DebugAndroidTest", "testDebugUnitTest")
+koverReport {
+    androidReports("debug") {
+        filters {
+            excludes {
+                classes("*BuildConfig*")
+                classes("*ComposableSingletons*")
+                classes("*hilt*")
+                classes("*Hilt*")
+                annotatedBy("*Generated*")
+                annotatedBy("*Preview*")
+                annotatedBy("*Serializable*")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -103,36 +103,37 @@ dependencies {
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.activity.compose)
+
     implementation(platform(libs.androidx.compose.bom))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material:material")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+
+    debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.ktor.client.android)
     implementation(libs.coil.compose)
     implementation(libs.accompanist.permissions)
     implementation(libs.play.services.location)
     implementation(libs.kotlin.coroutines.play)
+    implementation("androidx.compose.material:material-icons-extended-android")
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.io.mockk)
     testImplementation(libs.kotlin.kotlinTest)
     testImplementation(libs.turbine)
-
+    testImplementation(libs.androidx.ui.test.junit4)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.android.compiler)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.junit.rule)
+    testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.io.mockk)
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
-
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation(libs.mockk.android)
-    androidTestImplementation(libs.mockk.agent)
-    androidTestUtil("androidx.test.services:test-services:1.5.0-alpha02")
 }

@@ -1,0 +1,270 @@
+{
+  "results": [
+    {
+      "fsq_id": "4bb687ee2f70c9b6c0978530",
+      "categories": [
+        {
+          "id": 13031,
+          "name": "Burger Joint",
+          "short_name": "Burgers",
+          "plural_name": "Burger Joints",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/food/burger_",
+            "suffix": ".png"
+          }
+        },
+        {
+          "id": 13068,
+          "name": "American Restaurant",
+          "short_name": "American",
+          "plural_name": "American Restaurants",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/food/default_",
+            "suffix": ".png"
+          }
+        },
+        {
+          "id": 13145,
+          "name": "Fast Food Restaurant",
+          "short_name": "Fast Food",
+          "plural_name": "Fast Food Restaurants",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/food/fastfood_",
+            "suffix": ".png"
+          }
+        }
+      ],
+      "chains": [],
+      "closed_bucket": "VeryLikelyOpen",
+      "distance": 2617,
+      "geocodes": {
+        "main": {
+          "latitude": 45.839809,
+          "longitude": -119.701271
+        },
+        "roof": {
+          "latitude": 45.839809,
+          "longitude": -119.701271
+        }
+      },
+      "link": "/v3/places/4bb687ee2f70c9b6c0978530",
+      "location": {
+        "address": "103 N Main St",
+        "census_block": "410499701011039",
+        "country": "US",
+        "dma": "Portland, Or",
+        "formatted_address": "103 N Main St, Boardman, OR 97818",
+        "locality": "Boardman",
+        "po_box": "P.O. Box 458",
+        "postcode": "97818",
+        "region": "OR"
+      },
+      "name": "C & D Drive-In",
+      "related_places": {},
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "fsq_id": "55c7b1a7498e3f3d66262a36",
+      "categories": [
+        {
+          "id": 13039,
+          "name": "Deli",
+          "short_name": "Deli",
+          "plural_name": "Delis",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/food/deli_",
+            "suffix": ".png"
+          }
+        },
+        {
+          "id": 13145,
+          "name": "Fast Food Restaurant",
+          "short_name": "Fast Food",
+          "plural_name": "Fast Food Restaurants",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/food/fastfood_",
+            "suffix": ".png"
+          }
+        }
+      ],
+      "chains": [
+        {
+          "id": "ab4bee40-d68a-012e-5619-003048cad9da",
+          "name": "Subway"
+        }
+      ],
+      "closed_bucket": "VeryLikelyOpen",
+      "distance": 2513,
+      "geocodes": {
+        "main": {
+          "latitude": 45.836702,
+          "longitude": -119.699328
+        },
+        "roof": {
+          "latitude": 45.836702,
+          "longitude": -119.699328
+        }
+      },
+      "link": "/v3/places/55c7b1a7498e3f3d66262a36",
+      "location": {
+        "address": "115 SE Front St",
+        "census_block": "410499701012000",
+        "country": "US",
+        "cross_street": "",
+        "dma": "Portland, Or",
+        "formatted_address": "115 SE Front St, Boardman, OR 97818",
+        "locality": "Boardman",
+        "postcode": "97818",
+        "region": "OR"
+      },
+      "name": "Subway",
+      "related_places": {},
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "fsq_id": "4bde4c2dffdec928de6ce8a1",
+      "categories": [
+        {
+          "id": 17029,
+          "name": "Convenience Store",
+          "short_name": "Convenience Store",
+          "plural_name": "Convenience Stores",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/shops/conveniencestore_",
+            "suffix": ".png"
+          }
+        }
+      ],
+      "chains": [
+        {
+          "id": "16d26710-992b-0132-fd75-7a163eb2a6fc",
+          "name": "Circle K"
+        }
+      ],
+      "closed_bucket": "VeryLikelyOpen",
+      "distance": 2503,
+      "geocodes": {
+        "main": {
+          "latitude": 45.839578,
+          "longitude": -119.701104
+        },
+        "roof": {
+          "latitude": 45.839578,
+          "longitude": -119.701104
+        }
+      },
+      "link": "/v3/places/4bde4c2dffdec928de6ce8a1",
+      "location": {
+        "address": "101 N Main St",
+        "census_block": "410499701011039",
+        "country": "US",
+        "cross_street": "",
+        "dma": "Portland, Or",
+        "formatted_address": "101 N Main St, Boardman, OR 97818",
+        "locality": "Boardman",
+        "postcode": "97818",
+        "region": "OR"
+      },
+      "name": "Circle K",
+      "related_places": {},
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "fsq_id": "508c26a0e4b0c56e756f4b5d",
+      "categories": [
+        {
+          "id": 13035,
+          "name": "Coffee Shop",
+          "short_name": "Coffee Shop",
+          "plural_name": "Coffee Shops",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_",
+            "suffix": ".png"
+          }
+        },
+        {
+          "id": 13065,
+          "name": "Restaurant",
+          "short_name": "Restaurant",
+          "plural_name": "Restaurants",
+          "icon": {
+            "prefix": "https://ss3.4sqi.net/img/categories_v2/food/default_",
+            "suffix": ".png"
+          }
+        }
+      ],
+      "chains": [],
+      "closed_bucket": "LikelyOpen",
+      "distance": 2437,
+      "geocodes": {
+        "main": {
+          "latitude": 45.836407,
+          "longitude": -119.701611
+        },
+        "roof": {
+          "latitude": 45.836407,
+          "longitude": -119.701611
+        }
+      },
+      "link": "/v3/places/508c26a0e4b0c56e756f4b5d",
+      "location": {
+        "address": "101 SE Front St",
+        "census_block": "410499701012001",
+        "country": "US",
+        "cross_street": "",
+        "dma": "Portland, Or",
+        "formatted_address": "101 SE Front St, Boardman, OR 97818",
+        "locality": "Boardman",
+        "postcode": "97818",
+        "region": "OR"
+      },
+      "name": "Boardman Jumpstart Java",
+      "related_places": {},
+      "timezone": "America/Los_Angeles"
+    },
+    {
+      "fsq_id": "4dee711a45dd3aa41d7d3722",
+      "categories": [],
+      "chains": [],
+      "closed_bucket": "Unsure",
+      "distance": 2455,
+      "geocodes": {
+        "main": {
+          "latitude": 45.839484,
+          "longitude": -119.704028
+        },
+        "roof": {
+          "latitude": 45.839484,
+          "longitude": -119.704028
+        }
+      },
+      "link": "/v3/places/4dee711a45dd3aa41d7d3722",
+      "location": {
+        "address": "101 NW Boardman Ave",
+        "address_extended": "# 199",
+        "census_block": "410499701011015",
+        "country": "US",
+        "cross_street": "",
+        "dma": "Portland, Or",
+        "formatted_address": "101 NW Boardman Ave, Boardman, OR 97818",
+        "locality": "Boardman",
+        "postcode": "97818",
+        "region": "OR"
+      },
+      "name": "Dodge City Inn",
+      "related_places": {},
+      "timezone": "America/Los_Angeles"
+    }
+  ],
+  "context": {
+    "geo_bounds": {
+      "circle": {
+        "center": {
+          "latitude": 45.8234,
+          "longitude": -119.7257
+        },
+        "radius": 22000
+      }
+    }
+  }
+}

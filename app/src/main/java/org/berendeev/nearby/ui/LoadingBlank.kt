@@ -19,5 +19,5 @@ fun LoadingBlank(modifier: Modifier = Modifier) {
 }
 
 object LoadingBlank {
-    internal val testTag = "LoadingBlank"
+    val testTag = "LoadingBlank"
 }
